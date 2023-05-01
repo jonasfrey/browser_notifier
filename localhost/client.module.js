@@ -7,14 +7,15 @@ class O_notification{
         s_inner_html, 
         b_render,
         n_milliseconds_to_live = null,
-        n_milliseconds_interval = null,
     ){
         this.s_class = s_class
         this.s_inner_html =  s_inner_html
         this.b_render = b_render
         this.n_milliseconds_to_live__constructor = n_milliseconds_to_live
         this.n_milliseconds_to_live = n_milliseconds_to_live
-        this.n_milliseconds_interval = n_milliseconds_interval
+        this.n_ms_wind_perf_now = 0;
+        this.n_ms_wind_perf_now__last = 0;
+        this.n_ms_wind_perf_now__delta = 0;
     }
 }
 
@@ -110,12 +111,16 @@ let f_o_js__notifier = function(
                 s_class,
                 s_inner_html, 
                 true, 
-                n_milliseconds_to_live, 
-                10
+                n_milliseconds_to_live,
             );
             
-            o_notification.f_interval = function(){
-                o_notification.n_milliseconds_to_live -= o_notification.n_milliseconds_interval;
+            o_notification.f_render = function(){
+                o_notification.n_animation_id = requestAnimationFrame(o_notification.f_render);
+
+                o_notification.n_ms_wind_perf_now = window.performance.now();
+                o_notification.n_ms_wind_perf_now__delta = o_notification.n_ms_wind_perf_now - o_notification.n_ms_wind_perf_now__last;
+
+                o_notification.n_milliseconds_to_live -= o_notification.n_ms_wind_perf_now__delta;
                 if(o_notification.n_milliseconds_to_live < 0){
                     o_notification.b_render = false;
                 }
@@ -128,8 +133,10 @@ let f_o_js__notifier = function(
                 o_js_o_notification._f_render()
                 // console.log(o_js_o_notification)
                 if(!o_notification.b_render){
-                    window.clearInterval(o_notification.n_interval)
+                    window.cancelAnimationFrame(o_notification.n_animation_id)
                 }
+                o_notification.n_ms_wind_perf_now__last = o_notification.n_ms_wind_perf_now;
+
             }
             var o_js_o_notification = {
                 f_o_js: function(){
@@ -171,17 +178,19 @@ let f_o_js__notifier = function(
 
                         onmouseenter: function(){
                             console.log("asdf")
-                            window.clearInterval(o_notification.n_interval)
+                            window.cancelAnimationFrame(o_notification.n_animation_id)
                         }, 
                         onmouseleave: function(){
-                            o_notification.n_interval = window.setInterval(o_notification.f_interval, o_notification.n_milliseconds_interval)
+                            o_notification.n_animation_id = window.requestAnimationFrame(o_notification.f_render)
+                            // o_notification.n_ms_wind_perf_now = window.performance.now();
+                            o_notification.n_ms_wind_perf_now__last = window.performance.now();
                         }
                     }
                 }
             };
             f_o_html_from_o_js(o_js_o_notification);
             o_state.a_o_js_o_notification.push(o_js_o_notification)
-            o_notification.n_interval = window.setInterval(o_notification.f_interval,o_notification.n_milliseconds_interval)
+            o_notification.n_animation_id = window.requestAnimationFrame(o_notification.f_render)
 
             o_state.a_o_notification.push(
                 o_notification
