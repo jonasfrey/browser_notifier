@@ -81,10 +81,6 @@ let f_o_js__notifier = function(
     let o = {
         class: '',
         a_o:[
-            {
-                s_tag: 'div', 
-                innerText: 'datepicker'
-            },
             o_js__a_o_notification,
         ], 
         f_notify:  function(
