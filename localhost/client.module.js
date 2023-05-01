@@ -13,9 +13,9 @@ class O_notification{
         this.b_render = b_render
         this.n_milliseconds_to_live__constructor = n_milliseconds_to_live
         this.n_milliseconds_to_live = n_milliseconds_to_live
-        this.n_ms_wind_perf_now = 0;
-        this.n_ms_wind_perf_now__last = 0;
-        this.n_ms_wind_perf_now__delta = 0;
+        this.n_ms_wind_perf_now = window.performance.now();
+        this.n_ms_wind_perf_now__last = window.performance.now();
+        this.n_ms_wind_perf_now__delta = window.performance.now();
     }
 }
 
