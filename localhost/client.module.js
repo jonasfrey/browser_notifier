@@ -104,6 +104,7 @@ let f_add_css = function(
         o_el.href = s_path_file
         // <link rel="stylesheet" href="mystyle.css">
     }
+    o_el.crossorigin="anonymous"; 
 
     // o_document.head.appendChild(o_el)
     o_document.head.insertBefore(o_el, o_document.head.firstChild);// this way the css will not overwrite
