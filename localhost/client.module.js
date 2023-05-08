@@ -240,7 +240,7 @@ let f_o_js__notifier = function(
 
     f_add_css(
         document,
-        `./pico_browser_notifier.scss.css`
+        `${import.meta.url.split('/').slice(0, -1).join("/")}/./pico_browser_notifier.scss.css`
     )
     f_add_css(
         document,
