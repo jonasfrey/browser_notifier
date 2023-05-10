@@ -330,7 +330,6 @@ let f_clear_all_notifications = function(){
 
 
 let f_o_js__notifier = function(){
-    console.log(o_state)
     o_state.o_js__a_o_notification = {
         f_o_js: function(){
             return {

@@ -1,14 +1,22 @@
-<!-- {"s_msg":"this file was automatically generated","s_by":"f_generate_markdown.module.js","s_ts_created":"Wed May 10 2023 13:22:54 GMT+0200 (Central European Summer Time)","n_ts_created":1683717774754} -->
+<!-- {"s_msg":"this file was automatically generated","s_by":"f_generate_markdown.module.js","s_ts_created":"Wed May 10 2023 16:55:37 GMT+0200 (Central European Summer Time)","n_ts_created":1683730537731} -->
 # import lib
 ```javascript
             // import {f_o_html_from_o_js} from "https://deno.land/x/f_o_html_from_o_js@0.7/mod.js";
             import {f_o_html_from_o_js} from "./f_o_html_from_o_js.module.js";
             import {
+                f_clear_all_notifications, 
                 f_o_js__notifier,
                 o_state as o_state__o_js_notifier,
                 f_f_o_js__timeoutbar_and_close_button, 
                 f_o_notification, 
-                f_o_notification__and_push_and_render
+                f_o_notification__and_push_and_render, 
+                f_f_o_js__font_awesome_icon,
+                f_f_o_js__loading,
+                f_f_o_js__info,
+                f_f_o_js__success,
+                f_f_o_js__warning,
+                f_f_o_js__error,
+                f_f_o_js__validation
             } from "./client.module.js"
 
               window.o_state = o_state__o_js_notifier
@@ -95,5 +103,55 @@ f_o_notification__and_push_and_render(
             window.onclick = function(){
               o_notification_4.n_milliseconds_to_live = o_notification_4.n_milliseconds_to_live__constructor;
             }
+            window.setTimeout(function(){
+              //clear all notifications
+              f_clear_all_notifications();
+              let o_notification_5 = f_o_notification__and_push_and_render(
+                f_f_o_js__font_awesome_icon("lol asdf asdf asdf asdf asdf asdf"),
+                20000
+              );
+
+              let o_notification_loading = f_o_notification__and_push_and_render(
+                f_f_o_js__loading('this is loading'), 
+                10000
+              )
+              window.setTimeout(function(){
+                o_notification_loading = f_o_notification__and_push_and_render(
+                f_f_o_js__error('could not load'), 
+                10000
+              )
+              },2000)
+              f_o_notification__and_push_and_render(
+                f_f_o_js__info('this is info'), 
+                10000
+              )
+              f_o_notification__and_push_and_render(
+                f_f_o_js__success('this is success'), 
+                10000
+              )
+              f_o_notification__and_push_and_render(
+                f_f_o_js__warning('this is warning'), 
+                10000
+              )
+              f_o_notification__and_push_and_render(
+                f_f_o_js__error('this is error'), 
+                10000
+              )
+              f_o_notification__and_push_and_render(
+                f_f_o_js__validation('this is validation'), 
+                10000
+              )
+              f_o_notification__and_push_and_render(
+                f_f_o_js__font_awesome_icon('this is custom', 'fa-solid fa-poo', 'warning'), 
+                10000
+              )
+
+              let o_n = f_o_notification__and_push_and_render(
+                f_f_o_js__info('Feuerfische (Pteroinae), oft auch Rotfeuerfische, seltener Löwenfische (von der englischen Bezeichnung lionfish) genannt, sind Bewohner der Korallenriffe des tropischen Indopazifik und des Roten Meeres aus der Unterordnung der Drachenkopfverwandten (Scorpaenoidei). Sie sind durch ihre großen, fächerförmigen Brustflossen mit langen, fast freistehenden Brustflossenstacheln sehr auffällig. Die Färbung der Feuerfische wird von einem dichten Muster von rötlichen bzw. bräunlichen und weißen Querstreifen bestimmt und dient mit der konturenauflösenden Gestalt der Fische zur Tarnung. Sie sind kaum zu erkennen, wenn sie zwischen Acroporen, Bäumchen-Weichkorallen, Haarsternen, Gorgonenhäuptern, Federwürmern oder Kalkröhrenwürmern stehen.[1] Feuerfische werden je nach Art 12 bis über 40 Zentimeter lang. Der 1816 von G. Cuvier geprägte Name (< πτερόεις) bedeutet „der Geflügelte, Befiederte“ (wird aber meist als weiblich aufgefasst).'), 
+              )
+              window.onclick = function(){
+                o_n.n_milliseconds_to_live = o_n.n_milliseconds_to_live__constructor;
+              }
+            },1000)
 
 ```
