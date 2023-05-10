@@ -1,11 +1,52 @@
 // import {f_o_html_from_o_js} from "https://deno.land/x/f_o_html_from_o_js@0.7/mod.js";
 import {f_o_html_from_o_js} from "./f_o_html_from_o_js.module.js";
 
+import {f_add_css} from "https://deno.land/x/f_add_css@0.3"
+
 let o_state = {
     a_o_notification: [],
     o_js__a_o_notification: [],
     a_o_js_o_notification: []
 };
+let s_css = `
+.a_o_notification .info,
+.a_o_notification .success,
+.a_o_notification .warning,
+.a_o_notification .error,
+.a_o_notification .validation {
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+.a_o_notification .info {
+    color: #00529B !important;
+    background-color: #BDE5F8 !important;
+    background-image: url('https://i.imgur.com/ilgqWuX.png');
+}
+.a_o_notification .success {
+    color: #4F8A10 !important;
+    background-color: #DFF2BF !important;
+    background-image: url('https://i.imgur.com/Q9BGTuy.png');
+}
+.a_o_notification .warning {
+    color: #9F6000 !important;
+    background-color: #FEEFB3 !important;
+    background-image: url('https://i.imgur.com/Z8q7ww7.png');
+}
+.a_o_notification .error{
+    color: #D8000C !important;
+    background-color: #FFBABA !important;
+    background-image: url('https://i.imgur.com/GnyDvKN.png');
+}
+.a_o_notification .validation{
+    color: #D63301 !important;
+    background-color: #FFCCBA !important;
+    background-image: url('https://i.imgur.com/GnyDvKN.png');
+}
+`;
+f_add_css('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
 
 class O_notification{
     constructor(
@@ -181,27 +222,6 @@ let f_f_o_js__timeoutbar_and_close_button = function(s_msg){
 
 
 
-let f_add_css = function(
-    o_document,
-    s_path_file,
-    s_css
-){
-    let o_el = null;
-    if(s_css){
-        var o_el_style = o_document.createElement("style")
-        o_el_style.innerText = s_css
-        o_el = o_el_style
-    }else{
-        o_el = o_document.createElement("link");
-        o_el.rel = "stylesheet"
-        o_el.href = s_path_file
-        // <link rel="stylesheet" href="mystyle.css">
-    }
-    o_el.crossorigin="anonymous"; 
-
-    // o_document.head.appendChild(o_el)
-    o_document.head.insertBefore(o_el, o_document.head.firstChild);// this way the css will not overwrite
-}
 
 
 let f_o_js__notifier = function(){
@@ -236,12 +256,9 @@ let f_o_js__notifier = function(){
     };
 
     f_add_css(
-        document,
         `${import.meta.url.split('/').slice(0, -1).join("/")}/./pico_browser_notifier.scss.css`
     )
     f_add_css(
-        document,
-        null, 
         `
         .a_o_notification{
             padding:1rem;
@@ -262,6 +279,7 @@ let f_o_js__notifier = function(){
         }
         `
     )
+    
 
     return o;
 
