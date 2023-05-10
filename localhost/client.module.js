@@ -1,6 +1,12 @@
 // import {f_o_html_from_o_js} from "https://deno.land/x/f_o_html_from_o_js@0.7/mod.js";
 import {f_o_html_from_o_js} from "./f_o_html_from_o_js.module.js";
 
+let o_state = {
+    a_o_notification: [],
+    o_js__a_o_notification: [],
+    a_o_js_o_notification: []
+};
+
 class O_notification{
     constructor(
         f_o_js, 
@@ -19,6 +25,94 @@ class O_notification{
     }
 }
 
+let f_o_notification = function(
+    f_o_js, 
+    n_milliseconds_to_live = null
+){
+
+    let o_notification = new O_notification(
+        f_o_js, 
+        true, 
+        1,//temporarily set 
+        o_state
+    );
+
+    if(typeof f_o_js == 'string'){
+        let s = f_o_js;
+        f_o_js = function(o_notification){
+            return {
+                innerText: s
+            }
+        }
+    }
+
+    if(n_milliseconds_to_live == null){
+        // slow reader 100 words per minute
+        var n_chars_per_word = 6;  
+        var n_seconds_per_word = 60/100;
+
+        var n_words = f_o_html_from_o_js({
+            f_o_js: f_o_js
+        }).innerText.length / n_chars_per_word;
+        var n_seconds_for_msg = n_words * n_seconds_per_word;
+        // console.log(n_seconds_for_msg)
+        n_seconds_for_msg = Math.max(2, n_seconds_for_msg)
+        n_milliseconds_to_live = n_seconds_for_msg*1000
+    }
+
+    o_notification = new O_notification(
+        f_o_js,
+        true, 
+        n_milliseconds_to_live,
+        o_state
+    );
+
+    var o_js_o_notification = {
+        f_o_js: function(){
+            let o_js = f_o_js(o_notification)
+            o_js.b_render = o_notification.b_render // we have to add the render boolean
+            return o_js
+        }
+    }
+
+    o_notification.f_render = function(){
+        o_notification.n_animation_id = requestAnimationFrame(o_notification.f_render);
+
+        o_notification.n_ms_wind_perf_now = window.performance.now();
+        o_notification.n_ms_wind_perf_now__delta = o_notification.n_ms_wind_perf_now - o_notification.n_ms_wind_perf_now__last;
+
+        o_notification.n_milliseconds_to_live -= o_notification.n_ms_wind_perf_now__delta;
+        if(o_notification.n_milliseconds_to_live < 0){
+            o_notification.b_render = false;
+        }
+        // o_js__a_o_notification._f_render();
+        let n_nor = o_notification.n_milliseconds_to_live / o_notification.n_milliseconds_to_live__constructor
+        if(n_nor < 0.){
+            
+            o_notification.b_render = false;
+            o_state.o_js__a_o_notification._f_render();
+        }
+        o_js_o_notification._f_render()
+        // console.log(o_js_o_notification)
+        if(!o_notification.b_render){
+            window.cancelAnimationFrame(o_notification.n_animation_id)
+        }
+        o_notification.n_ms_wind_perf_now__last = o_notification.n_ms_wind_perf_now;
+
+    }
+
+
+    f_o_html_from_o_js(o_js_o_notification);
+    o_notification.n_animation_id = window.requestAnimationFrame(o_notification.f_render)
+    
+    o_state.a_o_js_o_notification.push(o_js_o_notification)
+    o_state.o_js__a_o_notification._f_render();
+
+    return o_notification;
+
+
+    
+}
 let f_o_js__timeout_bar = function(o_notification){
     // console.log("asdf")
     return {
@@ -78,15 +172,6 @@ let f_f_o_js__timeoutbar_and_close_button = function(s_msg){
 }
 
 
-class O_state{
-    constructor(
-        o_element_html,
-    ){
-        this.o_element_html = o_element_html
-        this.a_o_notification = []
-    }
-}
-
 
 let f_add_css = function(
     o_document,
@@ -111,11 +196,8 @@ let f_add_css = function(
 }
 
 
-let f_o_js__notifier = function(
-    o_state
-){
-    o_state.a_o_js_o_notification = [];
-
+let f_o_js__notifier = function(){
+    console.log(o_state)
     o_state.o_js__a_o_notification = {
         f_o_js: function(){
             return {
@@ -142,102 +224,8 @@ let f_o_js__notifier = function(
         class: '',
         a_o:[
             o_state.o_js__a_o_notification,
-        ], 
-        f_notify:  function(
-            f_o_js, 
-            n_milliseconds_to_live = null
-        ){
-            console.log(n_milliseconds_to_live)
-            let o_notification = new O_notification(
-                f_o_js, 
-                true, 
-                1,//temporarily set 
-                o_state
-            );
-
-            if(typeof f_o_js == 'string'){
-                let s = f_o_js;
-                f_o_js = function(o_notification){
-                    return {
-                        innerText: s
-                    }
-                }
-            }
-
-            if(n_milliseconds_to_live == null){
-                // slow reader 100 words per minute
-                var n_chars_per_word = 6;  
-                var n_seconds_per_word = 60/100;
-
-                var n_words = f_o_html_from_o_js({
-                    f_o_js: f_o_js
-                }).innerText.length / n_chars_per_word;
-                var n_seconds_for_msg = n_words * n_seconds_per_word;
-                // console.log(n_seconds_for_msg)
-                n_seconds_for_msg = Math.max(2, n_seconds_for_msg)
-                n_milliseconds_to_live = n_seconds_for_msg*1000
-            }
-
-            o_notification = new O_notification(
-                f_o_js,
-                true, 
-                n_milliseconds_to_live,
-                o_state
-            );
-
-            var o_js_o_notification = {
-                f_o_js: function(){
-                    let o_js = f_o_js(o_notification)
-                    o_js.b_render = o_notification.b_render // we have to add the render boolean
-                    return o_js
-                }
-            }
-
-            o_notification.f_render = function(){
-                o_notification.n_animation_id = requestAnimationFrame(o_notification.f_render);
-
-                o_notification.n_ms_wind_perf_now = window.performance.now();
-                o_notification.n_ms_wind_perf_now__delta = o_notification.n_ms_wind_perf_now - o_notification.n_ms_wind_perf_now__last;
-
-                o_notification.n_milliseconds_to_live -= o_notification.n_ms_wind_perf_now__delta;
-                if(o_notification.n_milliseconds_to_live < 0){
-                    o_notification.b_render = false;
-                }
-                // o_js__a_o_notification._f_render();
-                let n_nor = o_notification.n_milliseconds_to_live / o_notification.n_milliseconds_to_live__constructor
-                if(n_nor < 0.){
-                    
-                    o_notification.b_render = false;
-                    o_state.o_js__a_o_notification._f_render();
-                }
-                o_js_o_notification._f_render()
-                // console.log(o_js_o_notification)
-                if(!o_notification.b_render){
-                    window.cancelAnimationFrame(o_notification.n_animation_id)
-                }
-                o_notification.n_ms_wind_perf_now__last = o_notification.n_ms_wind_perf_now;
-
-            }
-
-
-            f_o_html_from_o_js(o_js_o_notification);
-            o_state.a_o_js_o_notification.push(o_js_o_notification)
-            o_notification.n_animation_id = window.requestAnimationFrame(o_notification.f_render)
-
-            o_state.a_o_notification.push(
-                o_notification
-            );
-
-            o_state.o_js__a_o_notification._f_render();
-            // console.log(o_js__a_o_notification)
-            window.o_js__a_o_notification = o_state.o_js__a_o_notification
-        }
+        ],
     };
-    var o_html = f_o_html_from_o_js(o);
-    console.log(o_html)
-    window.o = o
-    o_state.o_element_html.appendChild(o_html);
-
 
     f_add_css(
         document,
@@ -267,15 +255,28 @@ let f_o_js__notifier = function(
         `
     )
 
-
-
     return o;
+
+}
+let f_o_notification__and_push_and_render = function(
+    f_o_js, 
+    n_milliseconds_to_live = null
+){
+    let o_notification = f_o_notification(
+        f_o_js, 
+        n_milliseconds_to_live
+    );
+    o_state.a_o_notification.push(o_notification);
+    o_state.o_js__a_o_notification._f_render();
+    return o_notification
 }
 
 export {
     f_o_js__notifier, 
-    O_state,
+    o_state,
     f_o_js__close_button, 
     f_o_js__timeout_bar, 
-    f_f_o_js__timeoutbar_and_close_button
+    f_f_o_js__timeoutbar_and_close_button, 
+    f_o_notification, 
+    f_o_notification__and_push_and_render
 }
