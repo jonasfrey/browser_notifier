@@ -324,7 +324,9 @@ let f_f_o_js__timeoutbar_and_close_button = function(s_msg){
 let f_clear_all_notifications = function(){
     o_state.a_o_notification = [];
     o_state.a_o_js_o_notification = [];
-    o_state.o_js__a_o_notification._f_render()
+    if(typeof o_state.o_js__a_o_notification._f_render == 'function'){
+        o_state.o_js__a_o_notification._f_render()
+    }
 }
 
 
