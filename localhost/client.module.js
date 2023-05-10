@@ -90,9 +90,14 @@ let f_o_notification = function(
         if(n_nor < 0.){
             
             o_notification.b_render = false;
-            o_state.o_js__a_o_notification._f_render();
+            if(typeof o_state.o_js__a_o_notification._f_render == 'function'){
+                o_state.o_js__a_o_notification._f_render();
+            }
         }
-        o_js_o_notification._f_render()
+        if(typeof o_js_o_notification._f_render == 'function'){
+            o_js_o_notification._f_render()
+        }
+        
         // console.log(o_js_o_notification)
         if(!o_notification.b_render){
             window.cancelAnimationFrame(o_notification.n_animation_id)
@@ -106,7 +111,10 @@ let f_o_notification = function(
     o_notification.n_animation_id = window.requestAnimationFrame(o_notification.f_render)
     
     o_state.a_o_js_o_notification.push(o_js_o_notification)
-    o_state.o_js__a_o_notification._f_render();
+
+    if(typeof o_state.o_js__a_o_notification == 'function'){
+        o_state.o_js__a_o_notification._f_render();
+    }
 
     return o_notification;
 
@@ -267,7 +275,9 @@ let f_o_notification__and_push_and_render = function(
         n_milliseconds_to_live
     );
     o_state.a_o_notification.push(o_notification);
-    o_state.o_js__a_o_notification._f_render();
+    if(typeof o_state.o_js__a_o_notification._f_render == "function"){
+        o_state.o_js__a_o_notification._f_render();
+    }
     return o_notification
 }
 
