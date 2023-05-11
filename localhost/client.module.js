@@ -84,7 +84,6 @@ let f_o_notification = function(
 
         o_notification.n_ms_wind_perf_now = window.performance.now();
         o_notification.n_ms_wind_perf_now__delta = o_notification.n_ms_wind_perf_now - o_notification.n_ms_wind_perf_now__last;
-        console.log('here')
         o_notification.n_milliseconds_to_live -= o_notification.n_ms_wind_perf_now__delta;
         if(o_notification.n_milliseconds_to_live < 0){
             o_notification.b_render = false;
