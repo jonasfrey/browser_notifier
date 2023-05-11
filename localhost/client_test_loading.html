@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>test</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css"> -->
+
+    </head>
+    <body>
+
+        <div id="browser_notifier">
+        </div>
+
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <script type="module" async defer>
+
+//./readme.md:start
+//md: # import lib
+            // import {f_o_html_from_o_js} from "https://deno.land/x/f_o_html_from_o_js@0.7/mod.js";
+            import {f_o_html_from_o_js} from "./f_o_html_from_o_js.module.js";
+            import {
+                f_clear_all_notifications, 
+                f_o_js__notifier,
+                o_state as o_state__o_js_notifier,
+                f_f_o_js__timeoutbar_and_close_button, 
+                f_o_notification, 
+                f_o_notification__and_push_and_render, 
+                f_f_o_js__font_awesome_icon,
+                f_f_o_js__loading,
+                f_f_o_js__info,
+                f_f_o_js__success,
+                f_f_o_js__warning,
+                f_f_o_js__error,
+                f_f_o_js__validation, 
+                f_clear_notification, 
+                f_restart_notification
+            } from "./client.module.js"
+
+            let o_js__notifier = f_o_js__notifier();
+            document.body.appendChild(
+              f_o_html_from_o_js(o_js__notifier)
+              );
+              window.o_notification_loading = f_o_notification__and_push_and_render(
+                      f_f_o_js__loading('this is loading'), 
+                      10000
+                    );
+                    
+            document.body.appendChild(
+              f_o_html_from_o_js(
+                {
+                  innerText: 'click me to load',
+                  s_tag: "button", 
+                  onmousedown: function(){
+                    f_restart_notification(o_notification_loading);
+                    window.setTimeout(function(){
+                      f_clear_notification(o_notification_loading)
+                    },2000)
+                  }
+                }
+              )
+            )
+//./readme.md:end
+
+        </script>
+
+<main>
+
+    </body>
+</html>

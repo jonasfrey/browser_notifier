@@ -84,7 +84,7 @@ let f_o_notification = function(
 
         o_notification.n_ms_wind_perf_now = window.performance.now();
         o_notification.n_ms_wind_perf_now__delta = o_notification.n_ms_wind_perf_now - o_notification.n_ms_wind_perf_now__last;
-
+        console.log('here')
         o_notification.n_milliseconds_to_live -= o_notification.n_ms_wind_perf_now__delta;
         if(o_notification.n_milliseconds_to_live < 0){
             o_notification.b_render = false;
@@ -136,7 +136,9 @@ let f_f_o_js__font_awesome_icon = function(
     ){
         if(s_class__icon.includes("spin")){
             //infinity timeout
-            o_notification.n_milliseconds_to_live = o_notification.n_milliseconds_to_live__constructor;
+            if(o_notification.n_milliseconds_to_live > 0){
+                o_notification.n_milliseconds_to_live = o_notification.n_milliseconds_to_live__constructor;
+            }
         }
         return {
             ...(function(){
@@ -457,7 +459,22 @@ let f_o_notification__and_push_and_render = function(
     }
     return o_notification
 }
-
+let f_clear_notification = function(o_notification){
+    o_notification.n_milliseconds_to_live = -1;
+    o_notification.b_render = false;
+    // o_state.o_js__a_o_notification._f_render();
+}
+let f_restart_notification = function(o_notification){
+    o_notification.n_milliseconds_to_live = o_notification.n_milliseconds_to_live__constructor;
+    o_notification.b_render = true;
+    o_notification.n_ms_wind_perf_now = window.performance.now();
+    o_notification.n_ms_wind_perf_now__last = window.performance.now();
+    o_notification.n_ms_wind_perf_now__delta = window.performance.now();
+    o_notification.n_animation_id = requestAnimationFrame(o_notification.f_render)
+    if(typeof o_state.o_js__a_o_notification._f_render == 'function'){
+        o_state.o_js__a_o_notification._f_render();
+    }
+}
 export {
     f_o_js__notifier, 
     o_state,
@@ -473,5 +490,7 @@ export {
     f_f_o_js__success,
     f_f_o_js__warning,
     f_f_o_js__error,
-    f_f_o_js__validation
+    f_f_o_js__validation, 
+    f_clear_notification, 
+    f_restart_notification
 }
