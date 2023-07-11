@@ -394,6 +394,7 @@ let f_o_js__notifier = function(){
     let s_css = (
         `
         .a_o_notification{
+            pointer-events: none; 
             font-family: sans;
             font-size: 1.2rem;
         }
@@ -408,6 +409,7 @@ let f_o_js__notifier = function(){
             flex-direction:column;
         }
         .o_notification {
+            pointer-events: auto;
             margin: var(--block-spacing-vertical) 0;
             padding: var(--block-spacing-vertical) var(--block-spacing-horizontal);
             border-radius: var(--border-radius);
